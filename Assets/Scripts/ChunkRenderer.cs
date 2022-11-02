@@ -4,20 +4,18 @@ using UnityEngine;
 using System;
 using Asset;
 using Terrain;
-
+using ChunkData;
 
 namespace ChunkRenderer {
 
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+
     public class ChunkRenderer : MonoBehaviour {
 
-        public const int _chunkWidth = 10;
+        public const int _chunkWidth = 20;
         public const int _chunkHeight = 128;
         
-        // 3D array
-        // 1 comma means 2D array, 2 commas mean 3D array
-        public BlockType[,,] Blocks = new BlockType[_chunkWidth , _chunkHeight, _chunkWidth];
-
+        public ChunkData.ChunkData chunkData;
 
         // Vertex coordinated of a new triangle
         private List<Vector3> vertex = new List<Vector3>();
@@ -36,7 +34,8 @@ namespace ChunkRenderer {
             // Blocks[0, 1, 0] = BlockType.Grass;
             // Blocks[0, 2, 0] = BlockType.Grass;
 
-            Blocks = Terrain.TerrainGenerator.GenerateTerrain(0, 0);
+            // Blocks = Terrain.TerrainGenerator.GenerateTerrain(0, 0);
+            // chunkData.Blocks = Terrain.TerrainGenerator.GenerateTerrain(100, 100);
 
             for (int y = 0; y < _chunkHeight; y++) {
                 for (int x = 0; x < _chunkWidth; x++) {
@@ -67,7 +66,7 @@ namespace ChunkRenderer {
                 blockPosition.y >= 0 && blockPosition.y < _chunkHeight &&
                 blockPosition.z >= 0 && blockPosition.z < _chunkWidth) {
                 
-                return Blocks[blockPosition.x, blockPosition.y, blockPosition.z];
+                return chunkData.Blocks[blockPosition.x, blockPosition.y, blockPosition.z];
             }
             else {
                 return BlockType.Air;

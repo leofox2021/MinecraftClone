@@ -1,6 +1,6 @@
 namespace Asset {
 
-    public enum BlockType {
+    public enum BlockType : byte {
 
         Air = 0, 
         Grass = 1
